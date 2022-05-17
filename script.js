@@ -3,6 +3,7 @@ const computer = new Player("computer");
 const game = createGame();
 const displayCommand = display();
 
+//trigger round when a player click one of the button
 const paper = document.querySelector(".paper");
 paper.addEventListener("click", () => {
   gameLogic("paper");
@@ -18,36 +19,7 @@ scissor.addEventListener("click", () => {
   gameLogic("scissor");
 });
 
-function gameLogic(choice) {
-  player1.setChoice(choice);
-  computer.setRandomChoice();
-  if (game.checkVictory(player1.getChoice(), computer.getChoice()) == 1) {
-    player1.updateScore();
-    displayCommand.updateScore("player1", player1.getScore());
-    game.updateHighScore(player1.getScore(), computer.getScore());
-    if (game.getHighScore() === 5) {
-      player1.resetScore();
-      computer.resetScore();
-      alert(game.getVictoryPlayer());
-      displayCommand.updateScore("player2", computer.getScore());
-      displayCommand.updateScore("player1", player1.getScore());
-    }
-  } else if (
-    game.checkVictory(player1.getChoice(), computer.getChoice()) == 2
-  ) {
-    computer.updateScore();
-    displayCommand.updateScore("player2", computer.getScore());
-    game.updateHighScore(player1.getScore(), computer.getScore());
-    if (game.getHighScore() === 5) {
-      player1.resetScore();
-      computer.resetScore();
-      alert(game.getVictoryPlayer());
-      displayCommand.updateScore("player2", computer.getScore());
-      displayCommand.updateScore("player1", player1.getScore());
-    }
-  }
-}
-
+//class player
 function Player(name = "player1") {
   this.name = name;
   this.score = 0;
@@ -81,6 +53,7 @@ Player.prototype.setRandomChoice = function () {
   console.log(this, this.choice);
 };
 
+//create the game obj
 function createGame() {
   let game = {};
   highScore = {
@@ -119,6 +92,7 @@ function createGame() {
   return game;
 }
 
+//manage the display of state
 function display() {
   const display = {};
 
@@ -128,8 +102,39 @@ function display() {
   };
 
   display.playAgain = function (winPlayer) {
-    alert(`${winPlayer} has won the gamedis`);
+    alert(`${winPlayer} has won the game`);
   };
 
   return display;
+}
+
+//game logic
+function gameLogic(choice) {
+  player1.setChoice(choice);
+  computer.setRandomChoice();
+  if (game.checkVictory(player1.getChoice(), computer.getChoice()) == 1) {
+    player1.updateScore();
+    displayCommand.updateScore("player1", player1.getScore());
+    game.updateHighScore(player1.getScore(), computer.getScore());
+    if (game.getHighScore() === 5) {
+      resetGame();
+    }
+  } else if (
+    game.checkVictory(player1.getChoice(), computer.getChoice()) == 2
+  ) {
+    computer.updateScore();
+    displayCommand.updateScore("player2", computer.getScore());
+    game.updateHighScore(player1.getScore(), computer.getScore());
+    if (game.getHighScore() === 5) {
+      resetGame();
+    }
+  }
+}
+
+function resetGame() {
+  player1.resetScore();
+  computer.resetScore();
+  alert(game.getVictoryPlayer());
+  displayCommand.updateScore("player2", computer.getScore());
+  displayCommand.updateScore("player1", player1.getScore());
 }
