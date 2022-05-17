@@ -7,15 +7,30 @@
     <title>Tic Tac Toe game</title>
 
     <script src="./script.js" defer></script>
+    <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
-    <div>HighScore</div>
-    <div class="player1">0</div>
-    <div class="player2">0</div>
-    <div>
-      <button class="paper">paper</button>
-      <button class="scissor">scissor</button>
-      <button class="rock">rock</button>
+    <main>
+      <div class="scores">
+        <div class="score-container">
+          <div>PlayerOne:</div>
+          <div class="player1">0</div>
+        </div>
+        <div class="score-container">
+          <div>Computer:</div>
+          <div class="player2">0</div>
+        </div>
+      </div>
+      <div class="buttons">
+        <button class="paper">paper</button>
+        <button class="scissor">scissor</button>
+        <button class="rock">rock</button>
+      </div>
+    </main>
+
+    <div class="play-again invisible">
+      <h3></h3>
+      <button>Play Again</button>
     </div>
   </body>
 </html>

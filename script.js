@@ -3,6 +3,12 @@ const computer = new Player("computer");
 const game = createGame();
 const displayCommand = display();
 
+const playAgainBtn = document.querySelector(".play-again button");
+playAgainBtn.addEventListener("click", () => {
+  const box = document.querySelector(".play-again");
+  box.classList.toggle("invisible");
+});
+
 //trigger round when a player click one of the button
 const paper = document.querySelector(".paper");
 paper.addEventListener("click", () => {
@@ -102,7 +108,10 @@ function display() {
   };
 
   display.playAgain = function (winPlayer) {
-    alert(`${winPlayer} has won the game`);
+    const text = document.querySelector(".play-again h3");
+    const box = document.querySelector(".play-again");
+    text.textContent = `${winPlayer} has won the game`;
+    box.classList.toggle("invisible");
   };
 
   return display;
@@ -134,7 +143,7 @@ function gameLogic(choice) {
 function resetGame() {
   player1.resetScore();
   computer.resetScore();
-  alert(game.getVictoryPlayer());
+  displayCommand.playAgain(game.getVictoryPlayer());
   displayCommand.updateScore("player2", computer.getScore());
   displayCommand.updateScore("player1", player1.getScore());
 }
